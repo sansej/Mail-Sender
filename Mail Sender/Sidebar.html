@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <!-- Вышеуказанный пакет CSS применяет стиль Google к кнопкам и другим элементам. -->
+    <style>
+    .branding-below { /*нижние и верхние отступы*/
+      bottom: 0px;
+      top: 0;
+    }
+    .branding-text {
+      left: 7px;
+      position: relative;
+      top: 3px;
+    }
+    .yellowblock {
+    background-color: #ebff00;
+    border-color: #ebff00;
+    border-width: 5px;
+    border-style: solid;
+    font-size: 10pt; /* Размер шрифта в пунктах */
+   }
+
+    .logo {
+      vertical-align: middle;
+    }
+    .width-100 {
+      width: 100%;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+    }
+    label {
+      font-weight: bold;
+    }
+    #creator-options,
+    #respondent-options {
+      background-color: #ebff00;
+      border-color: #ebff00;
+      border-width: 5px;
+      border-style: solid;
+      display: none;
+    }
+    #responscount-options,
+    #datetime-options {
+      background-color: #ebff00;
+      border-color: #ebff00;
+      border-width: 5px;
+      border-style: solid;
+      display: none;
+    }
+    #creator-email,
+    #respondent-email,
+    #button-bar,
+    #submit-subject {
+      margin-bottom: 10px;
+    }
+
+    #response-step {
+      display: inline;
+    }
+    #step-response {
+      display: inline;
+    }
+
+    </style>
+  </head>
+  <body>
+     <div class="sidebar branding-below">
+       <form>
+<!--    <div class="block" id="language-box"> <p>
+           <label for="select_language"> Select language: </label>
+           <select id="language">
+             <option id="eng-language">English</option>
+             <option id="rus-language">Русский</option>
+           </select>
+        </div>  -->
+
+         <div class="block">
+           <input type="checkbox" id="creator-notify" title="Отправляет Вам сообщение о количестве ответов и статистике">
+           <label for="creator-notify" id="rus-creator-notify">Уведомить себя</label>
+<!--           <label for="eng-creator-notify" id="eng-creator-notify">Notify yourself</label>   -->
+         </div>
+
+         <div class="block form-group" id="creator-options">
+           <label for="creator-email"> Мои адреса эл. почты: </label>
+           <input type="text" class="width-100" id="creator-email" title="Если адресов несколько, их необходимо разделить запятыми">
+           <label for="response-step" title="Сообщения отправляются каждый раз по достижению заданного количества участников">Отправлять сообщение после каждого
+           <input type="number" id="response-step" value="1" min="1" max="999" title="Максимальное число - 999"> ответа </label>
+        </div>
+
+        <div class="block">
+           <input type="checkbox" id="respondent-notify" title="Отправляет сообщение участнику">
+           <label for="respondent-notify" id="rus-respondent-notify">Уведомить участника</label>
+<!--           <label for="respondent-notify" id="eng-respondent-notify">Notify respondent</label>   -->
+        </div>
+
+        <div class="block form-group" id="respondent-options">
+           <label for="respondent-email">Вопрос который будет собирать адреса:</label>
+           <select class="width-100" id="respondent-email"></select>
+           <label for="submit-subject">Тема письма:</label>
+           <input type="text" class="width-100" id="submit-subject">
+           <label for="submit-notice">Сообщение в письме:</label>
+           <textarea rows="5" cols="40" id="submit-notice"class="width-100"></textarea>
+              <div class="block">
+                  <input type="checkbox" id="map-notify" title="Установите флажок для создания и прикрепления карты к письму">
+                  <label for="map-notify" id="send-map">Прикрепить карту к письму</label>
+              </div>
+              <div id = "map-options">
+                  <label for="point-map" id="address-map">Адрес:</label>
+                  <textarea rows="1" cols="40" id="point-map"class="width-100" title="Напишите адрес, который будет помещен в центр карты"></textarea>
+              </div>
+        </div>
+
+        <div class="block">
+           <input type="checkbox" id="datetime-notify" title="Устанавливает дату и время открытия и закрытия формы">
+           <label for="datetime-notify">Таймер</label> <p>
+        </div>
+
+        <div class="yellowblock" id="datetime-options">
+           <label for="datetime-open">Дата и время открытия формы: </label>
+           <input type="datetime-local" id="datetime-open" /><br>
+           <br>
+           <label for="datetime-close">Дата и время закрытия формы: </label>
+           <input type="datetime-local" id="datetime-close" />
+        </div>
+
+        <div class="block"> <p>
+           <input type="checkbox" id="responscount-notify" title="Устанавливает лимит участников, по достижении которого форма закроется">
+           <label for="responscount-notify">Количество участников</label>
+        </div>
+
+
+        <div class="yellowblock" id="responscount-options" >
+           <label for="step-response">Количество участников:</label>
+           <input type="number" id="step-response" value="10" min="1" max="999">
+        </div>
+
+        <div class="block" id="button-bar"> <p>
+           <button class="action" id="save-settings">Сохранить</button>
+        </div>
+      </form>
+    </div>
+<!--
+     <div class="sidebar bottom">
+     <img alt="Add-on logo" class="logo" width="25"
+       src="https://g-suite-documentation-images.firebaseapp.com/images/newFormNotificationsicon.png">
+     <span class="gray branding-text">Form Notifications by Google</span>
+         </div>
+-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
+    </script>
+    <script>
+      /**
+       * При загрузке документа назначьте необходимые обработчики для каждого
+       * элемента и попытайтесь загрузить любые сохраненные настройки,
+       */
+      $(function() {
+//        $('#language').select(hideCreatorNotify);
+        $('#save-settings').click(saveSettingsToServer);
+        $('#creator-notify').click(toggleCreatorNotify);
+        $('#map-notify').click(toggleMapNotify);
+        $('#respondent-notify').click(toggleRespondentNotify);
+        $('#datetime-notify').click(toggleDatetimeNotify);
+        $('#responscount-notify').click(toggleResponscountNotify);
+        $('#response-step').change(validateNumber);
+        $('#step-response').change(validateNumberCount);
+        google.script.run
+           .withSuccessHandler(loadSettings)
+           .withFailureHandler(showStatus)
+           .withUserObject($('#button-bar').get())
+           .getSettings();
+      });
+
+function loadSettings(settings) {
+//        $('#language').val(settings.language);
+        $('#map-options').hide();
+        $('#creator-email').val(settings.creatorEmail);
+        $('#datetime-open').val(settings.datetimeOpen);
+        $('#datetime-close').val(settings.datetimeClose);
+        $('#response-step').val(!settings.responseStep ? 10 : settings.responseStep);
+        $('#step-response').val(!settings.stepResponse ? 10 : settings.stepResponse);
+        $('#submit-subject').val(!settings.responseSubject ? 'Регистрация' : settings.responseSubject);
+        $('#submit-notice').val(!settings.responseText ? 'Спасибо за регистрацию!' : settings.responseText);
+
+        if (settings.creatorNotify === 'true') {
+          $('#creator-notify').prop('checked', true);
+          $('#creator-options').show();
+        }
+
+        if (settings.respondentNotify === 'true') {
+          if (settings.mapNotify === 'true') {
+            $('#map-notify').prop('checked', true); //устанавливаем свойство (property) "включен чекбокс"
+            $('#map-options').show(); //показываем настройку
+            $('#point-map').val(settings.pointMap);
+          }
+          $('#respondent-notify').prop('checked', true);
+          $('#respondent-options').show();
+        }
+
+        if (settings.datetimeNotify === 'true') {
+          $('#datetime-notify').prop('checked', true);
+          $('#datetime-options').show();
+        }
+
+        if (settings.responscountNotify === 'true') {
+          $('#responscount-notify').prop('checked', true);
+          $('#responscount-options').show();
+        }
+
+/*        if (settings.language === 'English') {
+          $('#rus-creator-notify').hide();
+          $('#rus-respondent-notify').hide();
+          $('#eng-creator-notify').show();
+          $('#eng-respondent-notify').show();
+
+        }  */
+// Заполняет поле выбора электронной почты участника строками, заданными для текстовых элементов формы.
+//Также включите идентификаторы элементов формы в качестве значений, чтобы их можно было легко восстановить во время операции сохранения.
+        for (var i = 0; i < settings.textItems.length; i++) {
+          var option = $('<option>').attr('value', settings.textItems[i]['id'])
+              .text(settings.textItems[i]['title']);
+          $('#respondent-email').append(option);
+        }
+//        $('#respondent-email').val(settings.sheet);
+        $('#respondent-email').val(settings.respondentEmailItemId);
+      }
+
+       // Переключает видимость параметров уведомлений создателя формы.
+       function toggleMapNotify() {
+        $('#status').remove();
+        $('#map-notify').is(':checked') ? $('#map-options').show() : $('#map-options').hide();
+       }
+
+      function toggleCreatorNotify() {
+        $('#status').remove();
+        $('#creator-notify').is(':checked') ? $('#creator-options').show() : $('#creator-options').hide();
+      }
+
+       // Переключите видимость параметров уведомления отправителя формы.
+      function toggleRespondentNotify() {
+        $('#status').remove();
+        $('#respondent-notify').is(':checked') ? $('#respondent-options').show() : $('#respondent-options').hide();
+      }
+
+             // Переключает видимость параметров таймера.
+      function toggleDatetimeNotify() {
+        $('#status').remove();
+        $('#datetime-notify').is(':checked') ? $('#datetime-options').show() : $('#datetime-options').hide();
+      }
+
+       // Переключите видимость параметров количества участников.
+      function toggleResponscountNotify() {
+        $('#status').remove();
+        $('#responscount-notify').is(':checked') ? $('#responscount-options').show() : $('#responscount-options').hide();
+      }
+
+      // Гарантирует, что введенный шаг является числом между 1 и 999 включительно.
+      function validateNumber() {
+        var value = $('#response-step').val();
+        if (!value) {
+          $('#response-step').val(1);
+        } else if (value < 1) {
+          $('#response-step').val(1);
+        } else if (value > 999) {
+          $('#response-step').val(999);
+        }
+      }
+
+      // Гарантирует, что количество участников является числом между 1 и 999 включительно.
+      function validateNumberCount() {
+        var value = $('#step-response').val();
+        if (!value) {
+          $('#step-response').val(1);
+        } else if (value < 1) {
+          $('#step-response').val(1);
+        } else if (value > 999) {
+          $('#step-response').val(999);
+        }
+      }
+
+      /**
+       * Собирает параметры, указанные на боковой панели надстройки, и отправляет их для сохранения в качестве свойств на сервере.
+       */
+function saveSettingsToServer() {
+this.disabled = true;
+$('#status').remove();
+let creatorNotify = $('#creator-notify').is(':checked');
+let respondentNotify = $('#respondent-notify').is(':checked');
+let datetimeNotify = $('#datetime-notify').is(':checked');
+let responscountNotify = $('#responscount-notify').is(':checked');
+let settings = {
+'creatorNotify': creatorNotify,
+'respondentNotify': respondentNotify,
+'datetimeNotify': datetimeNotify,
+'responscountNotify': responscountNotify
+};
+  if (creatorNotify) { // Сохранять параметры создателя, только если включен чекбокс
+    settings.responseStep = $('#response-step').val();
+    settings.creatorEmail = $('#creator-email').val().trim();
+    if (!settings.creatorEmail) { // Прервать сохранение, если отсуствует адрес электронной почты
+      showStatus('Введите адрес электронной почты владельца', $('#button-bar'));
+      this.disabled = false;
+      return;
+      }
+  }
+
+        if (respondentNotify) { // Сохраняйте параметры участника, только если включен чекбокс
+          settings.mapNotify = $('#map-notify').is(':checked');
+          settings.respondentEmailItemId = $('#respondent-email').val();
+          settings.responseSubject = $('#submit-subject').val();
+          settings.responseText = $('#submit-notice').val();
+          if (settings.mapNotify === true) { // Сохранять параметры карты если включен чекбокс
+             settings.pointMap = $('#point-map').val();
+             if (!settings.pointMap) { // Прервать сохранение, если отсуствует адрес
+               showStatus('Введите адрес для создания карты', $('#button-bar'));
+               this.disabled = false;
+               return;
+             }
+          }
+        }
+
+        if (datetimeNotify){ // Сохраняйте параметры таймера, только если включено
+        settings.datetimeOpen = $('#datetime-open').val();
+        settings.datetimeClose = $('#datetime-close').val();
+        if (!settings.datetimeOpen && !settings.datetimeClose) { // Прервать сохранение, если отсуствует время открытия и закрытия формы
+        showStatus('Введите дату и время открытия и закрытия формы', $('#button-bar'));
+        this.disabled = false;
+        return;
+        }
+        if (!settings.datetimeOpen) { // Прервать сохранение, если отсуствует время открытия формы
+        showStatus('Введите дату и время открытия формы', $('#button-bar'));
+        this.disabled = false;
+        return;
+        }
+          if (!settings.datetimeClose) { // Прервать сохранение, если отсуствует время открытия формы
+             showStatus('Введите дату и время закрытия формы', $('#button-bar'));
+             this.disabled = false;
+             return;
+             }
+          if ((new Date().getTime()) > (Date.parse (settings.datetimeOpen))){
+             showStatus('Выберите будущее время для открытия формы', $('#button-bar'));
+             this.disabled = false;
+             return;
+          }
+          if ((new Date().getTime()) > (Date.parse (settings.datetimeClose))){
+             showStatus('Выберите будущее время для закрытия формы', $('#button-bar'));
+             this.disabled = false;
+             return;
+             }
+             if ((Date.parse (settings.datetimeOpen)) >= (Date.parse (settings.datetimeClose))){
+             showStatus('Выберите будущее время для закрытия формы', $('#button-bar'));
+             this.disabled = false;
+             return;
+             }
+             }
+
+        if (responscountNotify) { // Сохраняйте параметры количества участников, только если включено
+          settings.stepResponse = $('#step-response').val();
+        }
+
+        // Сохраните настройки на сервере
+        google.script.run
+            .withSuccessHandler(
+              function(msg, element) {
+                showStatus('Настройки сохранены', $('#button-bar'));
+                element.disabled = false;
+              })
+            .withFailureHandler(
+              function(msg, element) {
+                showStatus(msg, $('#button-bar'));
+                element.disabled = false;
+              })
+            .withUserObject(this)
+            .saveSettings(settings);
+      }
+
+       // Вставляет div, который содержит сообщение о состоянии после данного элемента.
+      function showStatus(msg, element) {
+         var div = $('<div>')
+             .attr('id', 'status')
+             .attr('class','error')
+             .text(msg);
+        $(element).after(div);
+      }
+
+   </script>
+  </body>
+</html>

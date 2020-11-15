@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+   background: #c7b39b; /* Цвет фона и путь к файлу */
+   color: #fff; /* Цвет текста */
+  }
+ </style>
+ </head>
+<body> <!--
+<h1> -->
+<? for (var i = 0; i < paragraphs.length; i++) { ?>
+ <p><?= paragraphs[i] ?></p>
+<? } ?> <!--
+</h1> -->
+
+<hr>
+<p><img src="cid:logo" width="800" height="1169"></p>
+
+<?= mapNotis ?>
+
+<p> <a href="https://www.google.com/maps/d/edit?mid=17cPQlzhCxceLl2Z4qRw-np3-wKsBOwqC&usp=sharing"> <img src="cid:map" alt="Карта"></a></p>
+
+<p style="font-size:80%">Это сообщение было создано автоматически, не отвечайте на него.
+По вопросам технической поддержки можете писать на <i>SANSEJ5000@gmail.com</i>.
+<?= notice ?></p>
+</body>
+</html>
